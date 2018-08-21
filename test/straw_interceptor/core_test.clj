@@ -43,9 +43,15 @@
                                 {:a []}))))
   (testing "unhandled exceptions are thrown"
     (is (thrown? Exception (interceptor/execute [throw-enter-interceptor] {}))))
-  (testing "exceptions are caught on enter"
+  (testing "exceptions are caught on :enter"
     (let [error-a (atom nil)]
       (is (= {:a 0}
              (interceptor/execute [(catch-interceptor error-a) throw-enter-interceptor]
+                                  {:a 0})))
+      (is (exception? @error-a))))
+  (testing "exceptions are caught on :leave"
+    (let [error-a (atom nil)]
+      (is (= {:a 0}
+             (interceptor/execute [(catch-interceptor error-a) throw-leave-interceptor]
                                   {:a 0})))
       (is (exception? @error-a)))))

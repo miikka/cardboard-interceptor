@@ -1,7 +1,16 @@
 (ns straw-interceptor.core
   "Implementation of the interceptor pattern.")
 
-(defn- execute-steps
+(defn- try-f
+  [f ctx]
+  (if f
+    (try
+      (f ctx)
+      (catch Exception e
+        (assoc ctx :error e)))
+    ctx))
+
+(defn- execute-ctx
   [ctx]
   (if (contains? ctx :error)
     (do
@@ -15,22 +24,15 @@
       (let [ctx' (-> ctx
                      (update :queue pop)
                      (update :stack conj interceptor))]
-        (if-let [enter (:enter interceptor)]
-          (recur (try
-                   (enter ctx')
-                   (catch Exception e
-                     (assoc ctx' :error e))))
-          (recur ctx')))
+        (recur (try-f (:enter interceptor) ctx')))
       (if-let [interceptor (peek (:stack ctx))]
         (let [ctx' (-> ctx (update :stack pop))]
-          (if-let [leave (:leave interceptor)]
-            (recur (leave ctx'))
-            (recur ctx')))
+          (recur (try-f (:leave interceptor) ctx')))
         ctx))))
 
 (defn execute
   "Execute an interceptor chain."
   [chain ctx]
   (let [ctx (assoc ctx :queue (vec (reverse chain)) :stack [])]
-    (-> (execute-steps ctx)
+    (-> (execute-ctx ctx)
         (dissoc :queue :stack))))
