@@ -8,6 +8,7 @@ to study the idea of interceptors.
 Goals:
 
 * Simple, understandable, correct implementation.
+* An interface that is easy to use.
 
 Non-goals:
 
