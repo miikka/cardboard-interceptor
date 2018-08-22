@@ -1,4 +1,4 @@
-(ns straw-interceptor.core
+(ns cardboard.interceptor
   "Implementation of the interceptor pattern.")
 
 (defn- try-f

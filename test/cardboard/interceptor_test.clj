@@ -1,6 +1,6 @@
-(ns straw-interceptor.core-test
+(ns cardboard.interceptor-test
   (:require [clojure.test :refer [deftest is testing]]
-            [straw-interceptor.core :as interceptor]))
+            [cardboard.interceptor :as interceptor]))
 
 (def inc-enter-interceptor
   {:enter (fn [ctx] (update ctx :a inc))})
