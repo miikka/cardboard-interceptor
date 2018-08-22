@@ -1,8 +1,9 @@
 # cardboard-interceptor
 
-> Tehdään pahvinen ensin. -Jufo Peltomaa
+> Tehdään pahvinen ensin. *-Jufo Peltomaa*
 
-An implementation of the [interceptor pattern][pedestal].
+An implementation of the [interceptor pattern][pedestal]. I made this library
+to study the idea of interceptors.
 
 Goals:
 
@@ -11,6 +12,7 @@ Goals:
 Non-goals:
 
 * High performance.
+* Support for every async implementation out there.
 
 If you're looking for an industry-strength implementation, you should check out
 [Pedestal][pedestal] and [Sieppari][sieppari]. 
